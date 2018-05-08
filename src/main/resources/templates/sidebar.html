@@ -1,0 +1,42 @@
+<div class="page-sidebar " id="main-menu">
+	<div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
+	<div class="user-info-wrapper sm">
+	<div class="profile-wrapper sm">
+	<img src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg" width="69" height="69" />
+	<div class="availability-bubble online"></div>
+	</div>
+	<div class="user-info sm">
+	<div class="username">Fred <span class="semi-bold">Smith</span></div>
+	<div class="status">Life goes on...</div>
+	</div>
+	</div>
+	<p class="menu-title sm">Menu <span class="pull-right"></span></p>
+	<ul>
+	<li class="start open active"><a th:href="@{/home}"><i class="material-icons">home</i> <span class="title">Home</span> <span class="selected"></span></a>
+	</li>
+	<li>
+	<a href="javascript:;"> <i class="material-icons">dns</i> <span class="title">Categories</span> <span class=" arrow"></span> </a>
+	<ul class="sub-menu">
+	<li> <a th:href="@{/categories}"> Consulter</a></li>
+	<li> <a th:href="@{/nouvelleCategorie}"> Ajouter</a></li>
+	</ul>
+	</li>
+	<li>
+	<a href="javascript:;"> <i class="material-icons">person</i><span class="title"> Administrateurs</span> <span class=" arrow"></span> </a>
+	<ul class="sub-menu">
+	<li> <a href="typography.html"> Consulter</a></li>
+	<li> <a th:href="@{/nouvelAdministrateur}"> Ajouter</a></li>
+	</ul>
+	</li>
+	<li>
+	<a href="javascript:;"> <i class="material-icons">people_outline</i> <span class="title">Entrepreneurs</span></a>
+	</li>
+	<li>
+	<a href="javascript:;"> <i class="material-icons">people</i> <span class="title">Clients</span></a>
+	</li>
+	<li>
+	<a href="charts.html"> <i class="material-icons">timeline</i> <span class="title">Statistiques</span> </a>
+	</li>
+	</ul>
+	</div>
+</div>
