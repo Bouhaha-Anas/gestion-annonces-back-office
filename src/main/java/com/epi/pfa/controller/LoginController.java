@@ -15,4 +15,12 @@ public class LoginController
 		modelAndView.setViewName("login");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/access-denied", method = RequestMethod.GET)
+	public ModelAndView accessDenied()
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("access-denied");
+		return modelAndView;
+	}
 }

@@ -22,6 +22,7 @@ public class Administrateur  implements Serializable
 	private String prenom;
 	private String telephone;
 	private String adresseMail;
+	private String image;
 	
 	@OneToOne( cascade = CascadeType.ALL )
 	@JoinColumn
@@ -73,5 +74,13 @@ public class Administrateur  implements Serializable
 
 	public void setCompte(Compte compte) {
 		this.compte = compte;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

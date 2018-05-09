@@ -19,10 +19,10 @@
 		</div>
 		<div class="page-content">
 			<br><br><br><br>
-			<div class="col-md-12">
+			<div >
 				<div class="grid simple ">
 					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des catégories</span></h4>
+					<h4>Liste <span class="semi-bold">des entrepreneurs</span></h4>
 					<div class="tools">
 					<a href="javascript:;" class="collapse"></a>
 					</div>
@@ -31,17 +31,37 @@
 						<table class="table no-more-tables">
 							<thead>
 								<tr>
-									<th>Nom</th>
+									<th>Dénomination Sociale</th>
+									<th>Secteur d'activité</th>
+									<th>Adresse-mail</th>
+									<th>Site Web</th>
+									<th>Téléphone</th>
+									<th>Siège Social</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="categorie : ${categories}">
-									<td th:text="${categorie.nom}"></td>
+								<tr th:each="entrepreneur : ${entrepreneurs}">
+									<td th:text="${entrepreneur.denominationSociale}"></td>
+									<td th:text="${entrepreneur.secteurActivite}"></td>
+									<td th:text="${entrepreneur.adresseMail}"></td>
+									<td th:text="${entrepreneur.siteWeb}"></td>
+									<td th:text="${entrepreneur.telephone}"></td>
+									<td th:text="${entrepreneur.siegeSocial}"></td>
 									<td>
-										<form th:action="@{'/modificationCategorie/'+${categorie.id}}" th:method="get">
+										<form th:action="@{'/modificationEntrepreneur/'+${entrepreneur.id}}" th:method="get">
 											<input type="submit" value="Modifier" class="btn btn-warning" />
 										</form>
+										<th:block th:if="${entrepreneur.compte.enabled} == true " >
+											<form th:action="@{'/desactiverEntrepreneur/'+${entrepreneur.id}}" th:method="put">
+												<input type="submit" value="Désactiver" class="btn btn-danger" />
+											</form>
+										</th:block>
+										<th:block th:if="${entrepreneur.compte.enabled} == false" >
+											<form th:action="@{'/activerEntrepreneur/'+${entrepreneur.id}}" th:method="put">
+												<input type="submit" value="Activer" class="btn btn-primary" />
+											</form>
+										</th:block>
 									</td>
 								</tr>
 							</tbody>

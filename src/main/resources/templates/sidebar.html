@@ -14,6 +14,13 @@
 	<ul>
 	<li class="start open active"><a th:href="@{/home}"><i class="material-icons">home</i> <span class="title">Home</span> <span class="selected"></span></a>
 	</li>
+	<li sec:authorize="hasAuthority('SUPERADMINISTRATEUR')">
+	<a href="javascript:;"> <i class="material-icons">person</i><span class="title"> Administrateurs</span> <span class=" arrow"></span> </a>
+	<ul class="sub-menu">
+	<li> <a th:href="@{/administrateurs}"> Consulter</a></li>
+	<li> <a th:href="@{/nouvelAdministrateur}"> Ajouter</a></li>
+	</ul>
+	</li>
 	<li>
 	<a href="javascript:;"> <i class="material-icons">dns</i> <span class="title">Categories</span> <span class=" arrow"></span> </a>
 	<ul class="sub-menu">
@@ -22,20 +29,16 @@
 	</ul>
 	</li>
 	<li>
-	<a href="javascript:;"> <i class="material-icons">person</i><span class="title"> Administrateurs</span> <span class=" arrow"></span> </a>
-	<ul class="sub-menu">
-	<li> <a href="typography.html"> Consulter</a></li>
-	<li> <a th:href="@{/nouvelAdministrateur}"> Ajouter</a></li>
-	</ul>
+	<a href="javascript:;"> <i class="material-icons">shopping_cart</i> <span class="title">Offres</span></a>
 	</li>
 	<li>
-	<a href="javascript:;"> <i class="material-icons">people_outline</i> <span class="title">Entrepreneurs</span></a>
+	<a th:href="@{/entrepreneurs}"> <i class="material-icons">people_outline</i> <span class="title">Entrepreneurs</span></a>
 	</li>
 	<li>
-	<a href="javascript:;"> <i class="material-icons">people</i> <span class="title">Clients</span></a>
+	<a th:href="@{/clients}"> <i class="material-icons">people</i> <span class="title">Clients</span></a>
 	</li>
 	<li>
-	<a href="charts.html"> <i class="material-icons">timeline</i> <span class="title">Statistiques</span> </a>
+	<a href="#"> <i class="material-icons">timeline</i> <span class="title">Statistiques</span> </a>
 	</li>
 	</ul>
 	</div>

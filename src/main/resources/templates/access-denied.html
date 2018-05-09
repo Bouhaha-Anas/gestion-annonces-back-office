@@ -5,55 +5,24 @@
 <head th:include="headerTag :: headerFragmentt" >
 <title>Liste des catégories</title>
 </head>
-<body class="">
-	
-	<div class="header navbar navbar-inverse " th:replace="~{topMenu}">
-	</div>
-	
-		<div class="page-sidebar " th:replace="~{sidebar}" id="main-menu">
-		</div>
-		
-		<div class="page-container row">
-		
-		<div class="page-sidebar" th:replace="~{sidebar}" id="main-menu">
-		</div>
-		<div class="page-content">
-			<br><br><br><br>
-			<div class="col-md-12">
-				<div class="grid simple ">
-					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des catégories</span></h4>
-					<div class="tools">
-					<a href="javascript:;" class="collapse"></a>
-					</div>
-					</div>
-					<div class="grid-body no-border">
-						<table class="table no-more-tables">
-							<thead>
-								<tr>
-									<th>Nom</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="categorie : ${categories}">
-									<td th:text="${categorie.nom}"></td>
-									<td>
-										<form th:action="@{'/modificationCategorie/'+${categorie.id}}" th:method="get">
-											<input type="submit" value="Modifier" class="btn btn-warning" />
-										</form>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>	
-		</div>
-		
-	</div>
-	
-	
+<body class="error-body no-top">
+<div class="error-wrapper container">
+<div class="row">
+<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-offset-1 col-xs-10">
+<div class="error-container">
+<div class="error-main">
+<div class="error-number"> 403 </div>
+<div class="error-description"> Vous n'etes autorisé à consulter cette page. </div>
+<div class="error-description-mini"> Vous n'avez les droits suffisants. </div>
+<br>
+	<a th:href="@{/home}" class="btn btn-primary"><i class="material-icons">home</i>  Home</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
 	<script th:src="@{/assets/plugins/pace/pace.min.js}" type="text/javascript"></script>
 	<script th:src="@{/assets/plugins/jquery/jquery-1.11.3.min.js}" type="text/javascript"></script>
 	<script th:src="@{/assets/plugins/bootstrapv3/js/bootstrap.min.js}" type="text/javascript"></script>
