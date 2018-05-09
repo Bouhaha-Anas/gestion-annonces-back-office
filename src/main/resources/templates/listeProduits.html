@@ -28,7 +28,7 @@
 						</div>
 						</div>
 						<div class="grid-body no-border">
-							<th:block th:if="${produitsActifs} != null ">
+							<th:block th:if="${!produitsActifs.empty}">
 								<table class="table no-more-tables">
 									<thead>
 										<tr>
@@ -42,7 +42,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="produit : ${produitsActifs}">
-											<td><strong><th:block th:text="${produit.entrepreneur.nom}"></th:block></strong></td>
+											<td><strong><th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block></strong></td>
 											<td th:text="${produit.nom}"></td>
 											<td th:text="${produit.description}"></td>
 											<td th:text="${produit.dateDebut}"></td>
@@ -56,9 +56,9 @@
 									</tbody>
 								</table>
 							</th:block>
-							<th:block th:if="${produitsActifs} == null ">
+							<th:block th:if="${produitsActifs.empty}">
 								<div style="float: center;">
-									Pas de produits actifs !!
+									Tous les offres sont passées !!
 								</div>
 							</th:block>
 						</div>
@@ -74,7 +74,7 @@
 						</div>
 						</div>
 						<div class="grid-body no-border">
-							<th:block th:if="${produitsPasses} != null ">
+							<th:block th:if="${!produitsPasses.empty}  ">
 								<table class="table no-more-tables">
 									<thead>
 										<tr>
@@ -88,22 +88,20 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="produit : ${produitsPasses}">
-											<td><strong><th:block th:text="${produit.entrepreneur.nom}"></th:block></strong></td>
-											<td th:text="${produit.nom}"></td>
-											<td th:text="${produit.description}"></td>
-											<td th:text="${produit.dateDebut}"></td>
-											<td th:text="${produit.dateFin}"></td>
-											<td th:text="${produit.prixAvantRed}"></td>
-											<td th:text="${produit.prixApresRed}"></td>
+										<tr th:each="produitP : ${produitsPasses}">
+											<td><strong><th:block th:text="${produitP.entrepreneur.denominationSociale}"></th:block></strong></td>
+											<td th:text="${produitP.nom}"></td>
+											<td th:text="${produitP.description}"></td>
+											<td th:text="${produitP.dateDebut}"></td>
+											<td th:text="${produitP.dateFin}"></td>
+											<td th:text="${produitP.prixAvantRed}"></td>
+											<td th:text="${produitP.prixApresRed}"></td>
 										</tr>
 									</tbody>
 								</table>
 							</th:block>
-							<th:block th:if="${produitsPasses} == null ">
-								<div style="float: center;">
-									Pas de produits passés !!
-								</div>
+							<th:block th:if="${produitsPasses.empty} ">
+									Tous les offres sont actives !!
 							</th:block>
 						</div>
 					</div>

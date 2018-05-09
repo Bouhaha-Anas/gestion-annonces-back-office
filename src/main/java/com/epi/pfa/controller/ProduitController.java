@@ -24,21 +24,22 @@ public class ProduitController
 	ProduitService produitService;
 	
 	@RequestMapping( value = "/offres", method = RequestMethod.GET )
-	public ModelAndView pageListeAdministrateur()
+	public ModelAndView pageListeOffre()
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		List<Produit> produitsActifs = produitService.getAllActiveProducts();
 		List<Produit> produitsPasses = produitService.getAllPassedProducts();
 		modelAndView.addObject("produitsActifs", produitsActifs);
 		modelAndView.addObject("produitsPasses", produitsPasses);
-		modelAndView.setViewName("listeAdministrateurs");
+		modelAndView.setViewName("listeProduits");
 		return modelAndView;		
 	}
 	
 	@RequestMapping( value = "/desactiverOffre/{id}", method = RequestMethod.PUT )
-	public void pageListeAdministrateurAfterDisabling(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, ServletException
+	public void pageListeOffreAfterDisabling(@PathVariable("id") Long id, HttpServletResponse response) throws IOException, ServletException
 	{	
 		Produit produit = produitService.getProduit(id);
+		produit.setEstActive(false);
 		produitService.updateProduit(produit);
 		response.sendRedirect("/offres");
 	}
