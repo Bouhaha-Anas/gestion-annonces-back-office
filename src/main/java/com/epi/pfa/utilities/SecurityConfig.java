@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.authorizeRequests()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/nouvelAdministrateur", "/administrateurs", "/modificationAdministrateur/{id}", "desactiverAdministrateur/{id}", "activerAdministrateur/{id}").hasAuthority("SUPERADMINISTRATEUR")
-			.antMatchers("/home", "/categories", "/nouvelleCategorie", "/modificationCategorie/{id}", "/entrepreneurs", "/modificationEntrepreneur/{id}", "desactiverEntrepreneur/{id}", "activerEntrepreneur/{id}", "/clients", "/modificationClient/{id}", "desactiverClient/{id}", "activerClient/{id}" ).hasAnyAuthority("SUPERADMINISTRATEUR","ADMINISTRATEUR")
+			.antMatchers("/home", "/categories", "/nouvelleCategorie", "/modificationCategorie/{id}", "/entrepreneurs", "/modificationEntrepreneur/{id}", "desactiverEntrepreneur/{id}", "activerEntrepreneur/{id}", "/clients", "/modificationClient/{id}", "desactiverClient/{id}", "activerClient/{id}", "/offres", "desactiverOffre/{id}" ).hasAnyAuthority("SUPERADMINISTRATEUR","ADMINISTRATEUR")
 			.anyRequest()
 				.authenticated()
 			.and()
