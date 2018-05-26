@@ -7,4 +7,6 @@ import com.epi.pfa.model.Compte;
 public interface CompteRepository extends JpaRepository<Compte , Long>
 {
 	public Compte findOneByLogin(String login);
+	
+	Compte findOneByLoginAndIdNotIn(String login, Long id );
 }

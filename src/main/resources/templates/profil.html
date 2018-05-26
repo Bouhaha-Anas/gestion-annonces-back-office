@@ -10,22 +10,43 @@
 	<div class="header navbar navbar-inverse " th:replace="~{topMenu}">
 	</div>
 	
-	<div class="page-container row">
-		
 		<div class="page-sidebar " th:replace="~{sidebar}" id="main-menu">
 		</div>
 		
+		<div class="page-container row">
+		
+		<div class="page-sidebar" th:replace="~{sidebar}" id="main-menu">
+		</div>
 		<div class="page-content">
 			<br><br><br><br>
-			<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
-    			<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    			<strong th:text="${successMessage}" ></strong>	
-  			</div>
-  			<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
-    			<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    			<strong th:text="${errorMessage}" ></strong>	
-  			</div>
-			<div class="row">
+			<div class="col-md-12" th:if="${#httpServletRequest.requestURI == '/profil'}">
+				<div class="grid simple ">
+					<div class="grid-title no-border">
+					<h4>Mon <span class="semi-bold">porfil</span></h4>
+					<div class="tools">
+					<a th:href="@{/modificationProfil}"><i class="material-icons">edit</i></a>
+					</div>
+					</div>
+					<div class="grid-body no-border">
+						<h3><i class="material-icons">person_pin</i> <th:block th:text="${administrateur.nom}"></th:block> <th:block th:text="${administrateur.prenom}"></th:block></h3>
+						<br>
+						<h3><i class="material-icons">email</i> <th:block th:text="${administrateur.adresseMail}"></th:block></h3>
+						<br>
+						<h3><i class="material-icons">phone</i> <th:block th:text="${administrateur.telephone}"></th:block></h3>
+						<br>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" th:if="${#httpServletRequest.requestURI == '/modificationProfil'}">
+				<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    				<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    				<strong th:text="${successMessage}" ></strong>	
+  				</div>
+  				<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
+    				<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    				<strong th:text="${errorMessage}" ></strong>	
+  				</div>
 				<div class="col-md-12">
 					<div class="grid simple form-grid">
 						<div class="grid-title no-border">
@@ -35,41 +56,26 @@
 						</div>
 						</div>
 						<div class="grid-body no-border">
-							<form th:object="${administrateur}" th:action="@{/nouvelAdministrateur}" th:method="post" class="form-no-horizontal-spacing" id="form-condensed" autocomplete="off" enctype='multipart/form-data'>
+							<form th:object="${administrateur}" th:action="@{/modificationProfil}" th:method="put" class="form-no-horizontal-spacing" id="form-condensed" autocomplete="off">
 								<div class="row column-seperation">
 									<div class="col-md-6">
 										<h4>Informations Personnelles</h4>
 										<div class="row form-row">
 											<div class="col-md-5">
-												<input th:field="*{nom}"  id="form3FirstName" type="text" class="form-control" placeholder="Nom" required="required">
+												<input th:field="*{nom}" th:value="${administrateur.nom}"  id="form3FirstName" type="text" class="form-control" required="required">
 											</div>
 											<div class="col-md-7">
-												<input th:field="*{prenom}"  id="form3LastName" type="text" class="form-control" placeholder="Prénom" required="required">
+												<input th:field="*{prenom}" th:value="${administrateur.prenom}" id="form3LastName" type="text" class="form-control" required="required">
 											</div>
 										</div>
 										<div class="row form-row">
 											<div class="col-md-12">
-												<input th:field="*{telephone}"  id="form3Occupation" type="number" class="form-control" placeholder="Téléphone" required="required"> 
+												<input th:field="*{telephone}" th:value="${administrateur.telephone}" id="form3Occupation" type="number" class="form-control" required="required"> 
 											</div>
 										</div>
 										<div class="row form-row">
 											<div class="col-md-12">
-												<input th:field="*{adresseMail}"  id="form3Email" type="text" class="form-control" placeholder="email@address.com" required="required">
-											</div>
-										</div>
-										<div class="row form-row">
-											<div class="col-md-8">
-												<div class="radio">
-													<input id="male" type="radio" name="role" value="ADMINISTRATEUR" checked="checked">
-													<label for="male">Administrateur</label>
-													<input id="female" type="radio" name="role" value="SUPERADMINISTRATEUR">
-													<label for="female">Super Administrateur</label>
-												</div>
-											</div>
-										</div>
-										<div class="row form-row">
-											<div class="col-md-12">
-												<input name="imageA" id="form3Email" type="file" class="form-control" required="required" />
+												<input th:field="*{adresseMail}" th:value="${administrateur.adresseMail}" id="form3Email" type="text" class="form-control" required="required">
 											</div>
 										</div>
 									</div>
@@ -77,32 +83,37 @@
 										<h4>Informations du compte</h4>
 										<div class="row form-row">
 											<div class="col-md-12">
-											<input th:field="*{compte.login}" id="form3Address" type="text" class="form-control" placeholder="Nom d'utilisateur" required="required">
+											<input th:field="*{compte.login}" th:value="${administrateur.compte.login}" id="form3Address" type="text" class="form-control" />
 											</div>
 										</div>
 										<div class="row form-row">
 											<div class="col-md-12">
-											<input th:field="*{compte.motDePasse}" id="form3Address" type="password" class="form-control" placeholder="Mot de passe" required="required">
+											<input th:field="*{compte.motDePasse}" placeholder="Mot de passe" required="required" id="form3Address" type="password" class="form-control" />
 											</div>
 										</div>
 										<div class="row form-row">
 											<div class="col-md-12">
-											<input name="mdp" id="form3Address" type="password" class="form-control" placeholder="Resaisir mot de passe" required="required">
+											<input name="mdp" required="required" id="form3Address" type="password" class="form-control" placeholder="Resaisir mot de passe">
 											</div>
 										</div>						
 									</div>
 								</div>
+								<input type="hidden" th:field="*{id}"  th:value="${administrateur.id}" />
+								<input type="hidden" th:field="*{compte.enabled}"  th:value="${administrateur.compte.enabled}" />
+								<input type="hidden" th:field="*{compte.id}" th:value="${administrateur.compte.id}" />
+								<input type="hidden" th:field="*{image}" th:value="${administrateur.image}" />
+								<input type="hidden" th:field="*{compte.role}"  th:value="${administrateur.compte.role}" />
 								<div class="form-actions">
 									<div class="pull-right">
-										<button class="btn btn-primray btn-cons" type="submit"><i class="icon-ok"></i> Créer compte</button>
-										<button class="btn btn-white btn-cons" type="button">Annuler</button>
+										<input type="submit" value="Enregistrer" class="btn btn-primary"/>
+										<a th:href="@{/profil}" class="btn btn-info">Annuler</a>
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>	
 		</div>
 		
 	</div>

@@ -15,81 +15,68 @@
 		
 		<div class="page-container row">
 		
-		<div class="page-sidebar" th:replace="~{sidebar}" id="main-menu">
-		</div>
-		<div class="page-content">
-			<br><br><br><br>
-			<th:block th:if="${!clients.empty}">
-					<form autocomplete="off" th:action="@{/resultatRechercheClients}" th:method="post">
+			<div class="page-sidebar" th:replace="~{sidebar}" id="main-menu">
+			</div>
+			<div class="page-content">
+				<br><br><br><br>
+					<form autocomplete="off" th:action="@{/resultatRecherche}" th:method="post">
 						<ul class="nav quick-section">
 							<li class="m-r-10 input-prepend inside search-form no-boarder">
 								<span class="add-on"> <i class="material-icons">search</i></span>
-								<input name="nomC" type="text" class="no-boarder " placeholder="Chercher des clients par nom ..." style="width:250px;">
+								<input name="nomP" type="text" class="no-boarder " placeholder="Chercher des offres par nom ..." style="width:250px;">
 								<input type="submit" value="Vas-y" class="btn btn-success no-boarder" style="width:80px;"/>
 							</li>
 						</ul>
 					</form>
 					<br><br>
-			</th:block>
-			<div>
-				<div class="grid simple ">
-					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des clients</span></h4>
-					<div class="tools">
-					<a href="javascript:;" class="collapse"></a>
-					</div>
-					</div>
-					<div class="grid-body no-border">
-						<th:block th:if="${!clients.empty}">
-						<table class="table no-more-tables">
-							<thead>
-								<tr>
-									<th>Nom</th>
-									<th>Prénom</th>
-									<th>Adresse-mail</th>
-									<th>Adresse</th>
-									<th>Ville</th>
-									<th>Téléphone</th>		
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="client : ${clients}">
-									<td th:text="${client.nom}"></td>
-									<td th:text="${client.prenom}"></td>
-									<td th:text="${client.adresseMail}"></td>
-									<td th:text="${client.adresse}"></td>
-									<td th:text="${client.ville}"></td>
-									<td th:text="${client.telephone}"></td>
-									<td>
-										<form th:action="@{'/modificationClient/'+${client.id}}" th:method="get">
-											<input type="submit" value="Modifier" class="btn btn-warning" />
-										</form>
-										<th:block th:if="${client.compte.enabled} == true " >
-											<form th:action="@{'/desactiverClient/'+${client.id}}" th:method="put">
-												<input type="submit" value="Désactiver" class="btn btn-danger" />
-											</form>
-										</th:block>
-										<th:block th:if="${client.compte.enabled} == false" >
-											<form th:action="@{'/activerClient/'+${client.id}}" th:method="put">
-												<input type="submit" value="Activer" class="btn btn-primary" />
-											</form>
-										</th:block>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</th:block>
-						<th:block th:if="${clients.empty}">
+				<div>
+					<div class="grid simple ">
+						<div class="grid-title no-border">
+						<h4>Résultat <span class="semi-bold">de votre recherche</span></h4>
+						<div class="tools">
+						<a href="javascript:;" class="collapse"></a>
+						</div>
+						</div>
+						<div class="grid-body no-border">
+							<th:block th:if="${!produitsR.empty}">
+								<table class="table no-more-tables">
+									<thead>
+										<tr>
+											<th>Entrepreneur</th>
+											<th>Nom</th>
+											<th>Description</th>
+											<th>Date de début</th>
+											<th>Date de fin</th>	
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="produit : ${produitsR}">
+											<td><strong><th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block></strong></td>
+											<td th:text="${produit.nom}"></td>
+											<td th:text="${produit.description}"></td>
+											<td th:text="${produit.dateDebut}"></td>
+											<td th:text="${produit.dateFin}"></td>
+											<td>
+												<th:block th:if="${produit.estActive}">
+													<form th:action="@{'/desactiverOffre/'+${produit.id}}" th:method="put">
+														<input type="submit" value="Désactiver" class="btn btn-primary" />
+													</form>
+												</th:block>		
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</th:block>
+							<th:block th:if="${produitsR.empty}">
 								<div style="float: center;">
-									<i class="material-icons">sentiment_dissatisfied</i> Pas de clients ...
+									<i class="material-icons">sentiment_dissatisfied</i> Désolé, pas d'offres correspondantes à votre recherche ... 
 								</div>
-						</th:block>
+							</th:block>
+						</div>
 					</div>
-				</div>
-			</div>	
-		</div>
-		
+				</div>				
+			</div>
 	</div>
 	
 	
@@ -121,7 +108,6 @@
 	<script th:src="@{/assets/plugins/jquery-flot/jquery.flot.animator.min.js}"></script>
 	<script th:src="@{/assets/plugins/skycons/skycons.js}"></script>
 	<script th:src="@{/assets/js/dashboard.js}" type="text/javascript"></script>
-	
-	
+
 </body>
 </html>

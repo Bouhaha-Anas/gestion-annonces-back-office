@@ -50,17 +50,10 @@ public class AdministrateurController
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
-		Administrateur tempAdministrateur = administrateurService.findOneByAdresseMail(administrateur.getAdresseMail());
+		Compte compte = compteService.findOneByLogin(administrateur.getCompte().getLogin());
 		String mdp = req.getParameter("mdp");
 		
-		if(tempAdministrateur != null)
-		{
-			errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
-			modelAndView.addObject("administrateur", new Administrateur());
-			modelAndView.addObject("errorMessage", errorMessage);
-			
-		}
-		else
+		if(compte == null)
 		{
 			if( mdp.equals(administrateur.getCompte().getMotDePasse()) )
 			{
@@ -91,6 +84,11 @@ public class AdministrateurController
 				modelAndView.addObject("administrateur", new Administrateur());
 			}
 		}
+		else
+		{
+			errorMessage = "Le nom d'utilisateur existe déjà, réessayer.";
+			modelAndView.addObject("errorMessage", errorMessage);
+		}
 		
 		modelAndView.setViewName("ajoutAdministrateur");
 		return modelAndView;
@@ -104,7 +102,10 @@ public class AdministrateurController
 		String login = auth.getName();
 		Compte compte = compteService.findOneByLogin(login);
 		Administrateur administrateur = administrateurService.findOneByCompte(compte);
-		List<Administrateur> administrateurs = administrateurService.getAllButMe(administrateur.getId());
+		List<Administrateur> administrateurs = administrateurService.getAllAdministrators();
+		List<Administrateur> sAdministrateurs = administrateurService.getAllSuperAdministratorsButMe(administrateur.getId());
+		System.out.println("TAAAAAAAAAAAAAAIILLEEEE"+sAdministrateurs.size());
+		modelAndView.addObject("sAdministrateurs", sAdministrateurs);
 		modelAndView.addObject("administrateurs", administrateurs);
 		modelAndView.setViewName("listeAdministrateurs");
 		
@@ -147,23 +148,20 @@ public class AdministrateurController
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
-		Administrateur tempAdministrateur = administrateurService.findOneByAdresseMail(administrateur.getAdresseMail());
+		Compte compte = compteService.findOneButNotMe(administrateur.getCompte().getLogin(), administrateur.getId());
 		
-		if(tempAdministrateur != null)
+		if( compte == null )
 		{
-			if( tempAdministrateur.getId() != administrateur.getId() )
-			{
-				errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
-				modelAndView.addObject("administrateur", administrateur);
-				modelAndView.addObject("errorMessage", errorMessage);
-			}
-			else
-			{
-				String role = request.getParameter("role");
-		        administrateur.getCompte().setRole(role);
-		        modelAndView.addObject("successMessage", "Les informations de l'administrateur sont modifiées avec succés");
-		        administrateurService.updateAdministrateur(administrateur);
-			}
+			String role = request.getParameter("role");
+	        administrateur.getCompte().setRole(role);
+	        modelAndView.addObject("successMessage", "Les informations de l'administrateur sont modifiées avec succés");
+	        administrateurService.updateAdministrateur(administrateur);
+		}
+		else
+		{
+			errorMessage = "Le nom d'utilisateur existe déjà, réessayer.";
+			modelAndView.addObject("successMessage", errorMessage);
+			modelAndView.addObject("administrateur", administrateur);
 		}
 		
 		modelAndView.setViewName("modificationAdministrateur");
@@ -171,5 +169,14 @@ public class AdministrateurController
 		return modelAndView;		
 	}
 	
-	
+	@RequestMapping( value = "/resultatRechercheAdministrateurs", method = RequestMethod.POST )
+	public ModelAndView searchProductByNom(HttpServletRequest request) throws IOException, ServletException
+	{	
+		ModelAndView modelAndView = new ModelAndView();
+		String nomA = request.getParameter("nomA");
+		List<Administrateur> administrateurs = administrateurService.searchAdministratorByNom(nomA);
+		modelAndView.addObject("administrateurs", administrateurs);
+		modelAndView.setViewName("resultatRechercheAdministrateurs");
+		return modelAndView;
+	}
 }

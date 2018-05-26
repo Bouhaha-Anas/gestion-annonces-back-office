@@ -22,17 +22,12 @@ public class ProduitService
 	
 	public List<Produit> getAllActiveProducts()
 	{
-		return produitRepository.getAllActiveProducts();
+		return produitRepository.findAllByEstActiveTrue();
 	}
 	
 	public List<Produit> getAllPassedProducts()
 	{
-		return produitRepository.getAllPassedProducts();
-	}
-	
-	public int getTotalByCategorie(Long id)
-	{
-		return produitRepository.getTotalByCategorie(id);
+		return produitRepository.findAllByEstActiveFalse();
 	}
 	
 	public List<Produit> findByNomLike(String nom)
@@ -55,13 +50,13 @@ public class ProduitService
 		produitRepository.save(produit);
 	}
 	
-	public List<Produit> searchByCategorie(String nomP, String nomC)
-	{
-		return produitRepository.searchByCategorie(nomP, nomC);
-	}
-	
 	public List<Produit> getByDateAndCategorieId(Date date, Long id)
 	{
-		return produitRepository.getByDateAndCategorieId(date, id);
+		return produitRepository.findAllByDateDebutBeforeAndCategorieIdIn(date, id);
+	}
+
+	public List<Produit> findAllByNom(String nomP) 
+	{
+		return produitRepository.findAllByNomContainingIgnoreCaseOrderByEstActive(nomP);
 	}
 }

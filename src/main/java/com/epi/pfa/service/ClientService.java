@@ -41,4 +41,9 @@ public class ClientService
 	{
 		return clientRepository.findOneByAdresseMail(adresseMail);
 	}
+	
+	public List<Client> searchClientByNom(String nom)
+	{
+		return clientRepository.findAllByNomContainingIgnoreCase(nom);
+	}
 }

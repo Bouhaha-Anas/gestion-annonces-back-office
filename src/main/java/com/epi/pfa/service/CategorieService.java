@@ -48,4 +48,9 @@ public class CategorieService
 	{
 		categorieRepository.save(categorie);
 	}
+	
+	public List<Categorie> searchCategorie(String nom)
+	{
+		return categorieRepository.findAllByNomContainingIgnoreCase(nom);
+	}
 }

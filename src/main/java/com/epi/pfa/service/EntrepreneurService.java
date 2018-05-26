@@ -40,4 +40,8 @@ public class EntrepreneurService
 		return entrepreneurRepository.findOneByAdresseMail(adresseMail);
 	}
 	
+	public List<Entrepreneur> searchEntrepreneurByDenomination(String denomination) 
+	{
+		return entrepreneurRepository.findAllByDenominationSocialeContainingIgnoreCase(denomination);
+	}
 }

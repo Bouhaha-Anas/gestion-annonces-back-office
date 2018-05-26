@@ -31,7 +31,7 @@
 			<div class="col-md-12">
 				<div class="grid simple ">
 					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des Administrateurs</span></h4>
+					<h4>Résultat <span class="semi-bold">de votre recherche</span></h4>
 					<div class="tools">
 					<a href="javascript:;" class="collapse"></a>
 					</div>
@@ -59,12 +59,12 @@
 											<form th:action="@{'/modificationAdministrateur/'+${administrateur.id}}" th:method="get">
 												<input type="submit" value="Modifier" class="btn btn-warning" />
 											</form>
-											<th:block th:if="${administrateur.compte.enabled} == true " >
+											<th:block th:if="${administrateur.compte.enabled} == true and ${administrateur.compte.role} == 'ADMINISTRATEUR' " >
 												<form th:action="@{'/desactiverAdministrateur/'+${administrateur.id}}" th:method="put">
 													<input type="submit" value="Désactiver" class="btn btn-danger" />
 												</form>
 											</th:block>
-											<th:block th:if="${administrateur.compte.enabled} == false" >
+											<th:block th:if="${administrateur.compte.enabled} == false and ${administrateur.compte.role} == 'ADMINISTRATEUR'" >
 												<form th:action="@{'/activerAdministrateur/'+${administrateur.id}}" th:method="put">
 													<input type="submit" value="Activer" class="btn btn-primary" />
 												</form>
@@ -77,44 +77,7 @@
 						</th:block>
 						<th:block th:if="${administrateurs.empty}">
 							<div style="float: center;">
-								<i class="material-icons">sentiment_dissatisfied</i> Pas d'administrateurs ...
-							</div>
-						</th:block>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="grid simple ">
-					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des Super Administrateurs</span></h4>
-					<div class="tools">
-					<a href="javascript:;" class="collapse"></a>
-					</div>
-					</div>
-					<div class="grid-body no-border">
-						<th:block th:if="${!sAdministrateurs.empty}">
-							<table class="table no-more-tables">
-								<thead>
-									<tr>
-										<th>Nom</th>
-										<th>Prénom</th>
-										<th>Adresse E-mail</th>
-										<th>Téléphone</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="administrateur : ${sAdministrateurs}">
-										<td class="v-align-middle" th:text="${administrateur.nom}"></td>
-										<td class="v-align-middle" th:text="${administrateur.prenom}"></td>
-										<td class="v-align-middle" th:text="${administrateur.adresseMail}"></td>
-										<td class="v-align-middle" th:text="${administrateur.telephone}"></td>
-									</tr>
-								</tbody>
-							</table>
-						</th:block>
-						<th:block th:if="${sAdministrateurs.empty}">
-							<div style="float: center;">
-								<i class="material-icons">sentiment_dissatisfied</i> Il n'y a que vous avec comme Super Administrateur ...
+								<i class="material-icons">sentiment_dissatisfied</i> Désolé, pas d'administrateurs correspondantes à votre recherche ...
 							</div>
 						</th:block>
 					</div>

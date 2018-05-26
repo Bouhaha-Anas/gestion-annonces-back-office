@@ -22,4 +22,6 @@ public interface CategorieRepository extends JpaRepository<Categorie, Long>
 	public List<Categorie> findRecommanded(@Param("id") Long id);
 	
 	public Categorie findOneByNom(String nom);
+	
+	List<Categorie> findAllByNomContainingIgnoreCase(String nom);
 }

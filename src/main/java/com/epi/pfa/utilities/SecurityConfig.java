@@ -28,7 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	@Autowired
 	private AuthenticationFailureHandler authenticationFailureHandler;
 	
-	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
@@ -44,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		http
 			.authorizeRequests()
 			.antMatchers("/login").permitAll()
-			.antMatchers("/nouvelAdministrateur", "/administrateurs", "/modificationAdministrateur/{id}", "desactiverAdministrateur/{id}", "activerAdministrateur/{id}").hasAuthority("SUPERADMINISTRATEUR")
+			.antMatchers("/resultatRecherche","/profil","/modificationProfil", "/resultatRechercheClients", "/resultatRechercheEntrepreneurs", "/resultatRechercheCategories").authenticated()
+			.antMatchers("/nouvelAdministrateur", "/administrateurs", "/modificationAdministrateur/{id}", "desactiverAdministrateur/{id}", "activerAdministrateur/{id}", "/resultatRechercheAdministrateurs").hasAuthority("SUPERADMINISTRATEUR")
 			.antMatchers("/home", "/categories", "/nouvelleCategorie", "/modificationCategorie/{id}", "/entrepreneurs", "/modificationEntrepreneur/{id}", "desactiverEntrepreneur/{id}", "activerEntrepreneur/{id}", "/clients", "/modificationClient/{id}", "desactiverClient/{id}", "activerClient/{id}", "/offres", "desactiverOffre/{id}" ).hasAnyAuthority("SUPERADMINISTRATEUR","ADMINISTRATEUR")
 			.anyRequest()
 				.authenticated()

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +87,16 @@ public class ClientController
 		client.getCompte().setEnabled(true);
 		clientService.updateClient(client);
 		response.sendRedirect("/clients");		
+	}
+	
+	@RequestMapping( value = "/resultatRechercheClients", method = RequestMethod.POST )
+	public ModelAndView searchClientByNom(HttpServletRequest request) throws IOException, ServletException
+	{	
+		ModelAndView modelAndView = new ModelAndView();
+		String nomC = request.getParameter("nomC");
+		List<Client> clients = clientService.searchClientByNom(nomC);
+		modelAndView.addObject("clients", clients);
+		modelAndView.setViewName("resultatRechercheClients");
+		return modelAndView;
 	}
 }

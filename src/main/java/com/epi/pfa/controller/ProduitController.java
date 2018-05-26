@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,17 @@ public class ProduitController
 		produit.setEstActive(false);
 		produitService.updateProduit(produit);
 		response.sendRedirect("/offres");
+	}
+	
+	@RequestMapping( value = "/resultatRecherche", method = RequestMethod.POST )
+	public ModelAndView searchProductByNom(HttpServletRequest request) throws IOException, ServletException
+	{	
+		ModelAndView modelAndView = new ModelAndView();
+		String nomP = request.getParameter("nomP");
+		List<Produit> produitsR = produitService.findAllByNom(nomP);
+		modelAndView.addObject("produitsR", produitsR);
+		modelAndView.setViewName("resultatRecherche");
+		return modelAndView;
 	}
 	
 }

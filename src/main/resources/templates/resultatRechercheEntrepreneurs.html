@@ -10,117 +10,86 @@
 	<div class="header navbar navbar-inverse " th:replace="~{topMenu}">
 	</div>
 	
-	<div class="page-container row">
+		<div class="page-sidebar " th:replace="~{sidebar}" id="main-menu">
+		</div>
+		
+		<div class="page-container row">
 		
 		<div class="page-sidebar" th:replace="~{sidebar}" id="main-menu">
 		</div>
 		<div class="page-content">
 			<br><br><br><br>
-			<th:block th:if="${!administrateurs.empty}">
-					<form autocomplete="off" th:action="@{/resultatRechercheAdministrateurs}" th:method="post">
+			<th:block th:if="${!entrepreneurs.empty}">
+					<form autocomplete="off" th:action="@{/resultatRechercheEntrepreneurs}" th:method="post">
 						<ul class="nav quick-section">
 							<li class="m-r-10 input-prepend inside search-form no-boarder">
 								<span class="add-on"> <i class="material-icons">search</i></span>
-								<input name="nomA" type="text" class="no-boarder " placeholder="Chercher des administrateurs par nom ..." style="width:250px;">
+								<input name="nomE" type="text" class="no-boarder " placeholder="Chercher des entrepreneurs par dénomination ..." style="width:250px;">
 								<input type="submit" value="Vas-y" class="btn btn-success no-boarder" style="width:80px;"/>
 							</li>
 						</ul>
 					</form>
 					<br><br>
 			</th:block>
-			<div class="col-md-12">
+			<div>
 				<div class="grid simple ">
 					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des Administrateurs</span></h4>
+					<h4>Résultat <span class="semi-bold">de votre recherche</span></h4>
 					<div class="tools">
 					<a href="javascript:;" class="collapse"></a>
 					</div>
 					</div>
 					<div class="grid-body no-border">
-						<th:block th:if="${!administrateurs.empty}">
-						<table class="table no-more-tables">
-							<thead>
-								<tr>
-									<th>Nom</th>
-									<th>Prénom</th>
-									<th>Adresse E-mail</th>
-									<th>Téléphone</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="administrateur : ${administrateurs}">
-									<td class="v-align-middle" th:text="${administrateur.nom}"></td>
-									<td class="v-align-middle" th:text="${administrateur.prenom}"></td>
-									<td class="v-align-middle" th:text="${administrateur.adresseMail}"></td>
-									<td class="v-align-middle" th:text="${administrateur.telephone}"></td>
-									<td class="v-align-middle" colspan="3">
-										<th:block th:if="${administrateur.compte.role} == 'ADMINISTRATEUR' ">
-											<form th:action="@{'/modificationAdministrateur/'+${administrateur.id}}" th:method="get">
-												<input type="submit" value="Modifier" class="btn btn-warning" />
-											</form>
-											<th:block th:if="${administrateur.compte.enabled} == true " >
-												<form th:action="@{'/desactiverAdministrateur/'+${administrateur.id}}" th:method="put">
-													<input type="submit" value="Désactiver" class="btn btn-danger" />
-												</form>
-											</th:block>
-											<th:block th:if="${administrateur.compte.enabled} == false" >
-												<form th:action="@{'/activerAdministrateur/'+${administrateur.id}}" th:method="put">
-													<input type="submit" value="Activer" class="btn btn-primary" />
-												</form>
-											</th:block>
-										</th:block>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						</th:block>
-						<th:block th:if="${administrateurs.empty}">
-							<div style="float: center;">
-								<i class="material-icons">sentiment_dissatisfied</i> Pas d'administrateurs ...
-							</div>
-						</th:block>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="grid simple ">
-					<div class="grid-title no-border">
-					<h4>Liste <span class="semi-bold">des Super Administrateurs</span></h4>
-					<div class="tools">
-					<a href="javascript:;" class="collapse"></a>
-					</div>
-					</div>
-					<div class="grid-body no-border">
-						<th:block th:if="${!sAdministrateurs.empty}">
+						<th:block th:if="${!entrepreneurs.empty}">
 							<table class="table no-more-tables">
 								<thead>
 									<tr>
-										<th>Nom</th>
-										<th>Prénom</th>
-										<th>Adresse E-mail</th>
+										<th>Dénomination Sociale</th>
+										<th>Secteur d'activité</th>
+										<th>Adresse-mail</th>
+										<th>Site Web</th>
 										<th>Téléphone</th>
+										<th>Siège Social</th>
+										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="administrateur : ${sAdministrateurs}">
-										<td class="v-align-middle" th:text="${administrateur.nom}"></td>
-										<td class="v-align-middle" th:text="${administrateur.prenom}"></td>
-										<td class="v-align-middle" th:text="${administrateur.adresseMail}"></td>
-										<td class="v-align-middle" th:text="${administrateur.telephone}"></td>
+									<tr th:each="entrepreneur : ${entrepreneurs}">
+										<td th:text="${entrepreneur.denominationSociale}"></td>
+										<td th:text="${entrepreneur.secteurActivite}"></td>
+										<td th:text="${entrepreneur.adresseMail}"></td>
+										<td th:text="${entrepreneur.siteWeb}"></td>
+										<td th:text="${entrepreneur.telephone}"></td>
+										<td th:text="${entrepreneur.siegeSocial}"></td>
+										<td>
+											<form th:action="@{'/modificationEntrepreneur/'+${entrepreneur.id}}" th:method="get">
+												<input type="submit" value="Modifier" class="btn btn-warning" />
+											</form>
+											<th:block th:if="${entrepreneur.compte.enabled} == true " >
+												<form th:action="@{'/desactiverEntrepreneur/'+${entrepreneur.id}}" th:method="put">
+													<input type="submit" value="Désactiver" class="btn btn-danger" />
+												</form>
+											</th:block>
+											<th:block th:if="${entrepreneur.compte.enabled} == false" >
+												<form th:action="@{'/activerEntrepreneur/'+${entrepreneur.id}}" th:method="put">
+													<input type="submit" value="Activer" class="btn btn-primary" />
+												</form>
+											</th:block>
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</th:block>
-						<th:block th:if="${sAdministrateurs.empty}">
-							<div style="float: center;">
-								<i class="material-icons">sentiment_dissatisfied</i> Il n'y a que vous avec comme Super Administrateur ...
-							</div>
+						<th:block th:if="${entrepreneurs.empty}">
+								<div style="float: center;">
+									<i class="material-icons">sentiment_dissatisfied</i> Désolé, pas d'entrepreneurs correspondants à votre recherche ... 
+								</div>
 						</th:block>
 					</div>
 				</div>
 			</div>	
 		</div>
+		
 	</div>
 	
 	

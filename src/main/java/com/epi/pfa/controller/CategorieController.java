@@ -1,6 +1,10 @@
 package com.epi.pfa.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,6 +92,17 @@ public class CategorieController
 		}
 		
 		modelAndView.setViewName("modificationCategorie");
+		return modelAndView;
+	}
+	
+	@RequestMapping( value = "/resultatRechercheCategories", method = RequestMethod.POST )
+	public ModelAndView searchProductByNom(HttpServletRequest request) throws IOException, ServletException
+	{	
+		ModelAndView modelAndView = new ModelAndView();
+		String nomC = request.getParameter("nomC");
+		List<Categorie> categories = categorieService.searchCategorie(nomC);
+		modelAndView.addObject("categories", categories);
+		modelAndView.setViewName("resultatRechercheCategories");
 		return modelAndView;
 	}
 }

@@ -35,13 +35,23 @@ public class AdministrateurService
 		return administrateurRepository.findOneByCompte(compte);
 	}
 	
-	public List<Administrateur> getAllButMe(Long idA)
+	public List<Administrateur> getAllAdministrators()
 	{
-		return administrateurRepository.getAllButMe(idA);
+		return administrateurRepository.findAllByCompteRoleIn("ADMINISTRATEUR");
+	}
+	
+	public List<Administrateur> getAllSuperAdministratorsButMe(Long idA)
+	{
+		return administrateurRepository.findAllByIdNotInAndCompteRoleIn(idA, "SUPERADMINISTRATEUR");
 	}
 
 	public void updateAdministrateur(Administrateur administrateur) 
 	{
 		administrateurRepository.save(administrateur);
+	}
+	
+	public List<Administrateur> searchAdministratorByNom(String nom)
+	{
+		return administrateurRepository.findAllByNomContainingIgnoreCaseOrderByCompteRole(nom);
 	}
 }
